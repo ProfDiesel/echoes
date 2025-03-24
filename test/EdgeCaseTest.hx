@@ -24,20 +24,21 @@ class EdgeCaseTest extends Test {
 	
 	//Tests may be run in any order, but not in parallel.
 	
+	@:access(echoes.SystemList.__update__)
 	private function testAllArgumentsOptional():Void {
 		new OptionalListenerSystem().activate();
-		Echoes.update();
+		Echoes.activeSystems.__update__(1);
 		assertTimesCalled(0, "OptionalListenerSystem.optionalNameUpdated");
 		
 		final entity:Entity = new Entity();
 		entity.add(("name":Name));
-		Echoes.update();
+		Echoes.activeSystems.__update__(1);
 		assertTimesCalled(1, "OptionalListenerSystem.optionalNameUpdated");
 		
 		//When there are multiple entities, the function should be called for
 		//each, whether or not they have `Name` components.
 		new Entity();
-		Echoes.update();
+		Echoes.activeSystems.__update__(1);
 		assertTimesCalled(3, "OptionalListenerSystem.optionalNameUpdated");
 	}
 	
@@ -319,6 +320,7 @@ class EdgeCaseTest extends Test {
 		ComponentStorage.onError.clear();
 	}
 	
+	@:access(echoes.SystemList.__update__)
 	private function testRemoveDuringUpdate():Void {
 		final system:RemoveStringSystem = new RemoveStringSystem();
 		system.activate();
@@ -331,7 +333,7 @@ class EdgeCaseTest extends Test {
 		entity1.add("keep");
 		Assert.equals(2, Echoes.getView(String).entities.length);
 		
-		Echoes.update();
+		Echoes.activeSystems.__update__(1);
 		assertTimesCalled(2, "RemoveStringSystem.removeString");
 		Assert.equals(1, Echoes.getView(String).entities.length);
 		
@@ -339,7 +341,7 @@ class EdgeCaseTest extends Test {
 		entity1.add("keep");
 		entity2.add("remove");
 		MethodCounter.reset();
-		Echoes.update();
+		Echoes.activeSystems.__update__(1);
 		assertTimesCalled(3, "RemoveStringSystem.removeString");
 		Assert.equals(1, Echoes.getView(String).entities.length);
 		

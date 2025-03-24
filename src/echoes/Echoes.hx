@@ -2,9 +2,9 @@ package echoes;
 
 import echoes.ComponentStorage;
 import echoes.Entity;
+import echoes.View;
 import echoes.utils.Clock;
 import echoes.utils.ReadOnlyData;
-import echoes.View;
 import haxe.Serializer;
 import haxe.Unserializer;
 
@@ -91,7 +91,7 @@ class Echoes {
 	private static var lastUpdateLength:Int = 0;
 	#end
 	
-	private static var lastUpdate:Float = haxe.Timer.stamp();
+	private static var lastUpdate:Time = Time.stamp();
 	private static var updateTimer:haxe.Timer;
 	
 	/**
@@ -99,7 +99,7 @@ class Echoes {
 	 * you will need to call `Echoes.update()` yourself.
 	 */
 	public static function init(?fps:Float = 60):Void {
-		lastUpdate = haxe.Timer.stamp();
+		lastUpdate = Time.stamp();
 		
 		if(updateTimer != null) {
 			updateTimer.stop();
@@ -131,14 +131,14 @@ class Echoes {
 	 * Updates all active systems.
 	 */
 	public static function update():Void {
-		final startTime:Float = haxe.Timer.stamp();
-		final deltaTime:Float = startTime - lastUpdate;
+		final startTime:Time = Time.stamp();
+		final deltaTime:Time = startTime - lastUpdate;
 		lastUpdate = startTime;
 		
 		activeSystems.update(deltaTime);
 		
 		#if echoes_profiling
-		lastUpdateLength = Std.int((haxe.Timer.stamp() - startTime) * 1000);
+		lastUpdateLength = (Time.stamp() - startTime).toMilliseconds();
 		#end
 	}
 	

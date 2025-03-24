@@ -85,13 +85,13 @@ class SystemList extends System {
 	 * For convenience, you may wish to call `Echoes.update()` instead. It will
 	 * calculate `deltaTime` for you, based on real time elapsed.
 	 */
-	public inline function update(deltaTime:Float):Void {
+	public inline function update(deltaTime:Time):Void {
 		__update__(deltaTime);
 	}
 	
-	private override function __update__(deltaTime:Float):Void {
+	private override function __update__(deltaTime:Time):Void {
 		#if echoes_profiling
-		final startTime:Float = haxe.Timer.stamp();
+		final startTime:Time = Time.stamp();
 		#end
 		
 		__deltaTime__ = deltaTime;
@@ -103,7 +103,7 @@ class SystemList extends System {
 		}
 		
 		#if echoes_profiling
-		__updateTime__ = Std.int((haxe.Timer.stamp() - startTime) * 1000);
+		__updateTime__ = (Time.stamp() - startTime).toMilliseconds();
 		#end
 	}
 	

@@ -1,9 +1,9 @@
 package echoes;
 
 import echoes.Echoes;
+import echoes.View;
 import echoes.macro.ViewBuilder;
 import echoes.utils.Signal;
-import echoes.View;
 import haxe.macro.Expr;
 import haxe.rtti.Meta;
 
@@ -73,7 +73,7 @@ class System {
 	
 	@:noCompletion private final __children__:Array<ChildSystem> = [];
 	
-	@:noCompletion private var __deltaTime__:Float = 0;
+	@:noCompletion private var __deltaTime__:Time = 0;
 	
 	public var active(default, null):Bool = false;
 	
@@ -131,7 +131,7 @@ class System {
 	}
 	
 	@:noCompletion
-	private inline function __addListenersWithPriority__(priority:Int, runUpdateListeners:(Float) -> Void):Void {
+	private inline function __addListenersWithPriority__(priority:Int, runUpdateListeners:(Time) -> Void):Void {
 		__children__.push(new ChildSystem(this, priority, runUpdateListeners));
 	}
 	
@@ -154,7 +154,7 @@ class System {
 	}
 	
 	@:allow(echoes.Echoes)
-	private function __update__(deltaTime:Float):Void {
+	private function __update__(deltaTime:Time):Void {
 		__deltaTime__ = deltaTime;
 		
 		//Everything else is handled by macro.
@@ -218,16 +218,16 @@ class System {
 private class ChildSystem extends System {
 	private final parentSystem:System;
 	
-	private final runUpdateListeners:(Float) -> Void;
+	private final runUpdateListeners:(Time) -> Void;
 	
-	public inline function new(parentSystem:System, priority:Int, runUpdateListeners:(Float) -> Void) {
+	public inline function new(parentSystem:System, priority:Int, runUpdateListeners:(Time) -> Void) {
 		super(priority);
 		
 		this.parentSystem = parentSystem;
 		this.runUpdateListeners = runUpdateListeners;
 	}
 	
-	private override function __update__(deltaTime:Float):Void {
+	private override function __update__(deltaTime:Time):Void {
 		#if echoes_profiling
 		final __timestamp__ = Date.now().getTime();
 		#end
