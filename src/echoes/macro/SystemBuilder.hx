@@ -336,7 +336,7 @@ class SystemBuilder {
 			
 			private override function __update__(deltaTime:echoes.Time):Void {
 				#if echoes_profiling
-				final __timestamp__ = Date.now().getTime();
+				final __timestamp__ = echoes.Time.stamp();
 				#end
 				
 				${ if(parentTypes.length <= 2) {
@@ -364,7 +364,7 @@ class SystemBuilder {
 				} } */
 				
 				#if echoes_profiling
-				this.__updateTime__ = Std.int(Date.now().getTime() - __timestamp__);
+				this.__updateTime__ = echoes.Time.stamp() - __timestamp__;
 				#end
 			}
 		};

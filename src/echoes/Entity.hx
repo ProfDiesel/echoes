@@ -6,10 +6,10 @@ import echoes.ComponentStorage;
 import echoes.macro.EntityTools;
 import haxe.macro.Expr;
 
+using Lambda;
 using echoes.macro.ComponentStorageBuilder;
 using echoes.macro.MacroTools;
 using haxe.macro.Context;
-using Lambda;
 #end
 
 /**

@@ -9,6 +9,7 @@ import haxe.macro.Printer;
 import haxe.macro.Type;
 import haxe.macro.TypeTools;
 
+using Lambda;
 using echoes.macro.ComponentStorageBuilder;
 using echoes.macro.EntityTools;
 using echoes.macro.MacroTools;
@@ -16,7 +17,6 @@ using haxe.EnumTools;
 using haxe.macro.ComplexTypeTools;
 using haxe.macro.Context;
 using haxe.macro.ExprTools;
-using Lambda;
 
 /**
  * @see `echoes.Entity.build()`

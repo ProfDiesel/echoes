@@ -89,11 +89,12 @@ class Echoes {
 	
 	#if echoes_profiling
 	private static var lastUpdateLength:Int = 0;
-	#end
 	
 	private static var lastUpdate:Time = Time.stamp();
 	private static var updateTimer:haxe.Timer;
+	#end
 	
+	#if !echoes_no_timer
 	/**
 	 * @param fps The number of updates to perform each second. If this is zero,
 	 * you will need to call `Echoes.update()` yourself.
@@ -110,6 +111,7 @@ class Echoes {
 			updateTimer.run = update;
 		}
 	}
+	#end
 	
 	/**
 	 * Returns statistics about the app in JSON-compatible form.
@@ -130,6 +132,7 @@ class Echoes {
 	/**
 	 * Updates all active systems.
 	 */
+	#if !echoes_no_timer
 	public static function update():Void {
 		final startTime:Time = Time.stamp();
 		final deltaTime:Time = startTime - lastUpdate;
@@ -141,6 +144,11 @@ class Echoes {
 		lastUpdateLength = (Time.stamp() - startTime).toMilliseconds();
 		#end
 	}
+	#else
+	public static function update(deltatime: Time):Void {
+		activeSystems.update(deltatime);
+	}
+	#end
 	
 	/**
 	 * Deactivates all views and systems, destroys all entities, and cancels the
@@ -165,7 +173,9 @@ class Echoes {
 		Entity.idPool.resize(0);
 		Entity.nextId = 0;
 		
+	#if !echoes_no_timer
 		init(0);
+	#end
 	}
 	
 	//Singleton getters

@@ -229,13 +229,13 @@ private class ChildSystem extends System {
 	
 	private override function __update__(deltaTime:Time):Void {
 		#if echoes_profiling
-		final __timestamp__ = Date.now().getTime();
+		final __timestamp__ = Time.stamp();
 		#end
 		
 		runUpdateListeners(deltaTime);
 		
 		#if echoes_profiling
-		this.__updateTime__ = Std.int(Date.now().getTime() - __timestamp__);
+		this.__updateTime__ = Time.stamp() - __timestamp__;
 		#end
 	}
 	

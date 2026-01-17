@@ -1,17 +1,17 @@
 package;
 
 import Components;
+import MethodCounter.assertTimesCalled;
+import Systems;
 import echoes.ComponentStorage;
 import echoes.Echoes;
 import echoes.Entity;
 import echoes.System;
 import echoes.SystemList;
+import echoes.View;
 import echoes.utils.ComponentTypes;
 import echoes.utils.Signal;
-import echoes.View;
 import haxe.PosInfos;
-import MethodCounter.assertTimesCalled;
-import Systems;
 import utest.Assert;
 import utest.Test;
 
